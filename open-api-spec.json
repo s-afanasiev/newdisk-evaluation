@@ -1,0 +1,74 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/lessons": {
+      "get": {
+        "operationId": "LessonsController_lessonList",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lesson list here",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Lessons"
+        ]
+      },
+      "post": {
+        "operationId": "LessonsController_addLesson",
+        "summary": "add lesson:",
+        "parameters": [],
+        "responses": {
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "Lessons"
+        ]
+      }
+    },
+    "/api/lessons/{id}/evaluations": {
+      "post": {
+        "operationId": "LessonsController_addEvaluation",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Lessons"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "NewDisk Pupil API's",
+    "description": "List of API's available",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "LessonEntity": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}

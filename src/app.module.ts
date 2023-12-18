@@ -1,38 +1,24 @@
 import { Module } from '@nestjs/common';
-import { UsersController } from './users/users.controller';
-import { LessonsModule } from './lessons/lessons.module';
-import { UsersService } from './users/users.service';
-import { UsersModule } from './users/users.module';
-import { EvaluationsModule } from './evaluations/evaluations.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { LessonsModule } from './modules/lessons/lessons.module';
+import { UsersModule } from './modules/users/users.module';
+import { EvaluationsModule } from './modules/evaluations/evaluations.module';
+import { configuration } from './config/configuration';
+import { UsersController } from './modules/users/users.controller';
+import { getORMConfig } from './ormconfig';
 
 @Module({
   imports: [
-    LessonsModule, 
-    UsersModule, 
-    EvaluationsModule, 
     ConfigModule.forRoot({
       envFilePath: ['.development.env', '.env'],
       isGlobal: true,
       load: [configuration],
     }),
-    TypeOrmModule.forRoot({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: configService.get("db.type"),
-        host: configService.get("db.host"),
-        port: 3306,
-        username: 'root',
-        password: 'root',
-        database: 'test',
-        entities: [`${__dirname}/**/*.entity{.ts,.js}`],
-        synchronize: true,
-      }),
-    }),
+    TypeOrmModule.forRoot(getORMConfig()),
+    LessonsModule,
+    UsersModule,
+    EvaluationsModule,
   ],
-  controllers: [UsersController],
-  providers: [UsersService],
 })
 export class AppModule {}
