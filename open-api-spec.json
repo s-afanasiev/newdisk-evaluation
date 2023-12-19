@@ -25,6 +25,16 @@
         "operationId": "LessonsController_addLesson",
         "summary": "add lesson:",
         "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddLessonDto"
+              }
+            }
+          }
+        },
         "responses": {
           "403": {
             "description": "Forbidden."
@@ -66,6 +76,10 @@
   "components": {
     "schemas": {
       "LessonEntity": {
+        "type": "object",
+        "properties": {}
+      },
+      "AddLessonDto": {
         "type": "object",
         "properties": {}
       }

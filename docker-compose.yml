@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   student_db:
-    container_name: student-pg
+    container_name: student-db
     image: postgres:latest
     environment:
       POSTGRES_USER: student_user
@@ -28,7 +28,7 @@ services:
           memory: 4G
     
   pgadmin:
-    container_name: pgadmin
+    container_name: student-pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.ru

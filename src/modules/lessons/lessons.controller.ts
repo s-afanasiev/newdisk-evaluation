@@ -1,7 +1,8 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { LessonsService } from './lessons.service';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags, } from '@nestjs/swagger';
 import { LessonEntity } from './lesson.entity';
+import { AddLessonDto } from './add-lesson.dto';
 
 @ApiTags("Lessons")
 @Controller('api/lessons')
@@ -20,8 +21,8 @@ export class LessonsController {
     @Post()
     @ApiOperation({ summary: 'add lesson:' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
-    addLesson() {
-        return this.lessonsService.addLesson();
+    addLesson(@Body() body: AddLessonDto) {
+        return this.lessonsService.addLesson(body);
     }
 
     @Post("/:id/evaluations")
