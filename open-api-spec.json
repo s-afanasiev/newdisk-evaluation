@@ -47,8 +47,27 @@
     },
     "/api/lessons/{id}/evaluations": {
       "post": {
-        "operationId": "LessonsController_addEvaluation",
-        "parameters": [],
+        "operationId": "LessonsController_ddEvaluation",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddEvaluationDto"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": ""
@@ -62,6 +81,36 @@
             "bearer": []
           }
         ]
+      }
+    },
+    "/api/users": {
+      "get": {
+        "operationId": "UsersController_pupilList",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "operationId": "UsersController_addPupil",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
       }
     }
   },
@@ -80,6 +129,14 @@
         "properties": {}
       },
       "AddLessonDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "AddEvaluationDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateUserDto": {
         "type": "object",
         "properties": {}
       }

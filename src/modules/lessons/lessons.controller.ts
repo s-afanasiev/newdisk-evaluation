@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { LessonsService } from './lessons.service';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags, } from '@nestjs/swagger';
 import { LessonEntity } from './lesson.entity';
 import { AddLessonDto } from './add-lesson.dto';
+import { AddEvaluationDto } from './add-evaluation.dto';
 
 @ApiTags("Lessons")
 @Controller('api/lessons')
@@ -27,7 +28,7 @@ export class LessonsController {
 
     @Post("/:id/evaluations")
     @ApiBearerAuth()
-    addEvaluation() {
-        return this.lessonsService.addEvaluation();
+    async ddEvaluation(@Param("id") lessonId: string, @Body() body: AddEvaluationDto) {
+        return await this.lessonsService.addEvaluation(lessonId, body);
     }
 }

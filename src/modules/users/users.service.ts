@@ -15,12 +15,15 @@ export class UsersService {
         // console.log("UsersService:", this.configService.get("database"));
         // console.log("UsersService:", this.configService.get("DATABASE_HOST"));
     }
-    private readonly users: User[] = [];
-    pupilList() {
-        return Promise.resolve(this.users);
+
+    async pupilList() {
+        let users = await this.userRepo.find();
+        await this.wait(2);
+        return users;
     }
 
     async addPupil(createUserDto: CreateUserDto) {
+        console.log("UsersService.addPupil: createUserDto=", createUserDto)
         let user = await this.userRepo.findOneBy({
             name: createUserDto.name,
             email: createUserDto.email,
@@ -29,7 +32,15 @@ export class UsersService {
             user = await this.userRepo.save(createUserDto);
         }
         //@ 2. Вариант №2: автоматический обновляем запись и возвращаем ?
-        
+        console.log("UsersService.addPupil: result=", user)
         return user;
+    }
+
+    async wait(sec) {
+        return new Promise((resolve, reject)=>{
+            setTimeout(()=>{
+                resolve(true);
+            }, sec*1000);
+        })
     }
 }
