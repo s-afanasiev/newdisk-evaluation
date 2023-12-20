@@ -16,6 +16,6 @@ export class EvaluationEntity {
     @ManyToOne(()=>LessonEntity, lesson => lesson.evaluations)
     lesson: LessonEntity
     
-    @ManyToOne(()=>UserEntity)
+    @ManyToOne(()=>UserEntity, { eager: true })
     user: UserEntity
 }
