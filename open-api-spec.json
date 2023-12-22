@@ -112,6 +112,27 @@
           }
         }
       }
+    },
+    "/api/auth": {
+      "post": {
+        "operationId": "AuthController_reg",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthClientDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
     }
   },
   "info": {
@@ -137,6 +158,10 @@
         "properties": {}
       },
       "CreateUserDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "AuthClientDto": {
         "type": "object",
         "properties": {}
       }

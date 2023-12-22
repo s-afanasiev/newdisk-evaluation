@@ -7,6 +7,7 @@ import { EvaluationsModule } from './modules/evaluations/evaluations.module';
 import { configuration } from './config/configuration';
 import { UsersController } from './modules/users/users.controller';
 import { getORMConfig } from './ormconfig';
+import { AuthModule } from './modules/simplest-auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { getORMConfig } from './ormconfig';
     LessonsModule,
     UsersModule,
     EvaluationsModule,
+    AuthModule
   ],
 })
 export class AppModule {}
