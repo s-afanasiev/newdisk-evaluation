@@ -6,12 +6,25 @@
         "operationId": "LessonsController_lessonList",
         "parameters": [],
         "responses": {
-          "200": {
+          "201": {
             "description": "Lesson list here",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LessonEntity"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LessonEntity"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedException"
                 }
               }
             }
@@ -19,6 +32,11 @@
         },
         "tags": [
           "Lessons"
+        ],
+        "security": [
+          {
+            "Token auth": []
+          }
         ]
       },
       "post": {
@@ -36,18 +54,40 @@
           }
         },
         "responses": {
-          "403": {
-            "description": "Forbidden."
+          "201": {
+            "description": "The record has been successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddLessonAnswerDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedException"
+                }
+              }
+            }
           }
         },
         "tags": [
           "Lessons"
+        ],
+        "security": [
+          {
+            "Token auth": []
+          }
         ]
       }
     },
     "/api/lessons/{id}/evaluations": {
       "post": {
-        "operationId": "LessonsController_ddEvaluation",
+        "operationId": "LessonsController_addEvaluation",
         "parameters": [
           {
             "name": "id",
@@ -70,7 +110,24 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddEvaluationAnswerDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedException"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -78,7 +135,7 @@
         ],
         "security": [
           {
-            "bearer": []
+            "Token auth": []
           }
         ]
       }
@@ -89,9 +146,27 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddPupilAnswerDto"
+                  }
+                }
+              }
+            }
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "Token auth": []
+          }
+        ]
       },
       "post": {
         "operationId": "UsersController_addPupil",
@@ -108,9 +183,24 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddPupilAnswerDto"
+                }
+              }
+            }
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "Token auth": []
+          }
+        ]
       }
     },
     "/api/auth": {
@@ -129,9 +219,19 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "token created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthClientAnswerDto"
+                }
+              }
+            }
           }
-        }
+        },
+        "tags": [
+          "Auth"
+        ]
       }
     }
   },
@@ -144,26 +244,185 @@
   "tags": [],
   "servers": [],
   "components": {
+    "securitySchemes": {
+      "Token auth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    },
     "schemas": {
-      "LessonEntity": {
+      "UnauthorizedException": {
         "type": "object",
         "properties": {}
+      },
+      "LessonEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "Музыка"
+          },
+          "code": {
+            "type": "string",
+            "example": "music"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "code"
+        ]
       },
       "AddLessonDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "music"
+          },
+          "name": {
+            "type": "string",
+            "example": "Музыка"
+          }
+        },
+        "required": [
+          "code",
+          "name"
+        ]
+      },
+      "AddLessonAnswerDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "code": {
+            "type": "string",
+            "example": "music"
+          },
+          "name": {
+            "type": "string",
+            "example": "Музыка"
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "name"
+        ]
       },
       "AddEvaluationDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "example": "1"
+          },
+          "score": {
+            "type": "string",
+            "example": "56"
+          }
+        },
+        "required": [
+          "user_id",
+          "score"
+        ]
+      },
+      "AddEvaluationAnswerDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "3"
+          },
+          "user_id": {
+            "type": "string",
+            "example": "1"
+          },
+          "score": {
+            "type": "string",
+            "example": "56"
+          }
+        },
+        "required": [
+          "id",
+          "user_id",
+          "score"
+        ]
+      },
+      "AddPupilAnswerDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "Джонни"
+          },
+          "email": {
+            "type": "string",
+            "example": "silverhand@mail.com"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email"
+        ]
       },
       "CreateUserDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Джонни"
+          },
+          "email": {
+            "type": "string",
+            "example": "silverhand@mail.com"
+          }
+        },
+        "required": [
+          "name",
+          "email"
+        ]
       },
       "AuthClientDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "name1"
+          },
+          "pass": {
+            "type": "string",
+            "example": "pass1"
+          }
+        },
+        "required": [
+          "name",
+          "pass"
+        ]
+      },
+      "AuthClientAnswerDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "57e0209fedeb4cfabaa26d1acf57af51"
+          }
+        },
+        "required": [
+          "token"
+        ]
       }
     }
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AddEvaluationDto } from '../lessons/add-evaluation.dto';
+import { AddEvaluationDto } from '../lessons/dto/add-evaluation.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EvaluationEntity } from './evaluation.entity';
 import { Repository } from 'typeorm';

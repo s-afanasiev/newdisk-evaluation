@@ -24,6 +24,11 @@ async function bootstrap() {
     .setTitle("NewDisk Pupil API's")
     .setDescription("List of API's available")
     .setVersion('1.0')
+    .addSecurity("Token auth", {
+      type: "apiKey",
+      in: "header",
+      name: "authorization",
+    })
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document,{

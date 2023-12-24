@@ -32,7 +32,7 @@ export const configuration = (): Configuration => {
             password: process.env.DB_PASSWORD as string,
             database: process.env.DB_NAME as string,
             entities: [],
-            synchronize: false,
+            synchronize: true,
         }
     }
     return config;

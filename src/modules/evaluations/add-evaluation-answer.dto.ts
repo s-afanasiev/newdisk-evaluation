@@ -1,5 +1,10 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class AddEvaluationAnswerDto {
-    id: string;
-    user_id: string;
-    score: string;
+    @ApiProperty({example: "3"})
+    "id": string;
+    @ApiProperty({example: "1"})
+    "user_id": string;
+    @ApiProperty({example: "56"})
+    "score": string;
 }

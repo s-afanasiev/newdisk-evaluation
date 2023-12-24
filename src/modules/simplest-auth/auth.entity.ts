@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
-import { EvaluationEntity } from "../evaluations/evaluation.entity"
 
 @Entity()
 export class AuthEntity {
